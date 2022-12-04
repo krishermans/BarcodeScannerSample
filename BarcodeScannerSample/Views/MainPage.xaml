@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI"
+             xmlns:zx="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:BarcodeScannerSample.Converters"
+             x:Class="BarcodeScannerSample.Views.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BarcodeDetectionEventArgsConverter x:Key="BarcodeDetectionEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="55"
+            
+            VerticalOptions="Center">
+
+            <zxing:CameraBarcodeReaderView x:Name="barcodeReader"
+                                           WidthRequest="300" HeightRequest="300"
+                IsDetecting="True" IsTorchOn="False" >
+                <zxing:CameraBarcodeReaderView.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                                EventName="BarcodesDetected"
+                                Command="{Binding ScanCommand}"
+                                x:TypeArguments="zx:BarcodeDetectionEventArgs"/>
+                </zxing:CameraBarcodeReaderView.Behaviors>
+            </zxing:CameraBarcodeReaderView>
+
+            <Label
+                x:Name="barcodeResult"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                Text="{Binding ScannedMessage}" />
+
+            <Label
+                x:Name="barcodeFormat" TextColor="Blue"
+                FontSize="Medium"
+                HorizontalOptions="Center" 
+                Text="{Binding CodeType}"/>
+           
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
