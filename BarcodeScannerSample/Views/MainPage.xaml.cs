@@ -4,11 +4,12 @@ namespace BarcodeScannerSample.Views;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
+    private MainPageViewModel _viewModel;
+	public MainPage(MainPageViewModel viewModel)
 	{
 		InitializeComponent();
-
-        BindingContext = new MainPageViewModel();
+        _viewModel = viewModel;
+        BindingContext = viewModel;
 	}
 
     private void CameraBarcodeReaderView_BarcodesDetected(object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
